@@ -1,0 +1,14 @@
+# depslib dependency file v1.0
+1638828943 source:/home/cassolli/Dropbox/programacaoC/JogoTexugo/ProjetoGamer/main.c
+	<stdlib.h>
+	<SFML/Graphics.h>
+	<SFML/Window.h>
+	<SFML/Audio.h>
+	<stdio.h>
+	<math.h>
+	<time.h>
+
+1637361531 source:/home/cassolli/Dropbox/programacaoC/JogoTexugo/ProjetoGamer/teste.c
+	<SFML/Audio.h>
+	<SFML/Graphics.h>
+
