@@ -12,3 +12,12 @@
 	<SFML/Audio.h>
 	<SFML/Graphics.h>
 
+1638832888 source:/home/cassolli/Dropbox/programacaoC/JogoTexugo/ProjetoGamerTexugoinC/main.c
+	<stdlib.h>
+	<SFML/Graphics.h>
+	<SFML/Window.h>
+	<SFML/Audio.h>
+	<stdio.h>
+	<math.h>
+	<time.h>
+
