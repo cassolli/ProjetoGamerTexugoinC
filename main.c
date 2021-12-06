@@ -149,7 +149,10 @@ void caminhaTexugo(personagem_t *texugo, sfSprite *desenho,sfRenderWindow *janel
     if(dados->posicao == 1) texugo->idxQuadroTexugo = texugo->idxQuadroTexugoMax;
 
     //printf("quadro %d\n",texugo->idxQuadroTexugo);
-    sfSprite_setPosition(desenho, (sfVector2f){texugo->posX, texugo->posY});
+    sfSprite_setPosition(desenho, (sfVector2f)
+    {
+        texugo->posX, texugo->posY
+    });
     sfIntRect quadro = PosicaoQuadro(texugo->idxQuadroTexugo);
     sfSprite_setTextureRect(desenho, quadro);
     sfRenderWindow_drawSprite( janela, desenho,NULL);
@@ -168,7 +171,10 @@ void caminhaRifeiro(inimigo_t *rifeiro, personagem_t *texugo, memoria_t *dados, 
         {
             colisao(texugo,rifeiro, dados);
         }
-        sfSprite_setPosition(desenho, (sfVector2f){rifeiro->posX, rifeiro->posY});
+        sfSprite_setPosition(desenho, (sfVector2f)
+        {
+            rifeiro->posX, rifeiro->posY
+        });
         sfIntRect quadro = PosicaoQuadro(rifeiro->idxQuadroInimigo);
         sfSprite_setTextureRect(desenho, quadro);
         sfRenderWindow_drawSprite( janela, desenho,NULL);
@@ -286,7 +292,8 @@ void ativaDetector(poderes_t *poder, memoria_t *dados, personagem_t *texugo)
     }
 }
 
-void ativaChocolate(poderes_t *poder, memoria_t *dados, personagem_t *texugo){
+void ativaChocolate(poderes_t *poder, memoria_t *dados, personagem_t *texugo)
+{
     if(dados->chocolate)
     {
         //printf("chocolate %d::%d::%d\n",chocolate[0]->idxQuadroTexugoMin,chocolate[0]->idxQuadroTexugoMin,chocolate[0]->idxQuadroTexugoMax);
@@ -307,98 +314,103 @@ void ativaChocolate(poderes_t *poder, memoria_t *dados, personagem_t *texugo){
     }
 }
 
-void inativaChocolate(poderes_t *poder, memoria_t *dados, personagem_t *texugo){
-                if(++dados->tempochocolate == poder->tempo)
-                {
-                    texugo->idxQuadroTexugo  = texugo->idxQuadroTexugoMinOriginal;
-                    texugo->idxQuadroTexugoMin = texugo->idxQuadroTexugoMinOriginal;
-                    texugo->idxQuadroTexugoMax = texugo->idxQuadroTexugoMaxOriginal;
-                    texugo->vel -= 0.3f;
-                    dados->chocolateAtivo =0;
-                    dados->tempochocolate =0;
-                }
+void inativaChocolate(poderes_t *poder, memoria_t *dados, personagem_t *texugo)
+{
+    if(++dados->tempochocolate == poder->tempo)
+    {
+        texugo->idxQuadroTexugo  = texugo->idxQuadroTexugoMinOriginal;
+        texugo->idxQuadroTexugoMin = texugo->idxQuadroTexugoMinOriginal;
+        texugo->idxQuadroTexugoMax = texugo->idxQuadroTexugoMaxOriginal;
+        texugo->vel -= 0.3f;
+        dados->chocolateAtivo =0;
+        dados->tempochocolate =0;
+    }
 }
 
-void ativaEsteroides(poderes_t *poder, memoria_t *dados, personagem_t *texugo){
+void ativaEsteroides(poderes_t *poder, memoria_t *dados, personagem_t *texugo)
+{
     if(dados->esteroides)
-                {
-                    if(dados->bloqueioBotao == 0 )
-                    {
-                        dados->esteroides--;
-                        dados->bloqueioBotao = 1;
-                        dados->esteroidesAtivo = 1;
-                        texugo->idxQuadroTexugo     =  poder->idxQuadroTexugoMin;
-                        texugo->idxQuadroTexugoMin  =  poder->idxQuadroTexugoMin;
-                        texugo->idxQuadroTexugoMax  =  poder->idxQuadroTexugoMax;
-                        dados->defesa = 0.6f;
-                    }
-                }
-                else
-                {
-                    printf("Sem esteroides");
-                }
+    {
+        if(dados->bloqueioBotao == 0 )
+        {
+            dados->esteroides--;
+            dados->bloqueioBotao = 1;
+            dados->esteroidesAtivo = 1;
+            texugo->idxQuadroTexugo     =  poder->idxQuadroTexugoMin;
+            texugo->idxQuadroTexugoMin  =  poder->idxQuadroTexugoMin;
+            texugo->idxQuadroTexugoMax  =  poder->idxQuadroTexugoMax;
+            dados->defesa = 0.6f;
+        }
+    }
+    else
+    {
+        printf("Sem esteroides");
+    }
 }
 
-void inativaEsteroides(poderes_t *poder, memoria_t *dados, personagem_t *texugo){
-            if(dados->esteroidesAtivo ==1 )
-            {
-                if(++dados->tempoesteroides == poder->tempo)
-                {
-                    texugo->idxQuadroTexugo = poder->idxQuadroTexugoMin2;
-                    texugo->idxQuadroTexugoMin = poder->idxQuadroTexugoMin2;
-                    texugo->idxQuadroTexugoMax = poder->idxQuadroTexugoMax2;
-                    dados->esteroidesAtivo = 3;
-                    dados->tempoesteroides = 0;
-                    dados->defesa = -0.6f;
+void inativaEsteroides(poderes_t *poder, memoria_t *dados, personagem_t *texugo)
+{
+    if(dados->esteroidesAtivo ==1 )
+    {
+        if(++dados->tempoesteroides == poder->tempo)
+        {
+            texugo->idxQuadroTexugo = poder->idxQuadroTexugoMin2;
+            texugo->idxQuadroTexugoMin = poder->idxQuadroTexugoMin2;
+            texugo->idxQuadroTexugoMax = poder->idxQuadroTexugoMax2;
+            dados->esteroidesAtivo = 3;
+            dados->tempoesteroides = 0;
+            dados->defesa = -0.6f;
 
-                }
-            }
-            if(dados->esteroidesAtivo ==3)
-            {
-                if(++dados->tempoesteroides == (poder->tempo/2))
-                {
-                    texugo->idxQuadroTexugo = texugo->idxQuadroTexugoMinOriginal;
-                    texugo->idxQuadroTexugoMin = texugo->idxQuadroTexugoMinOriginal;
-                    texugo->idxQuadroTexugoMax = texugo->idxQuadroTexugoMaxOriginal;
-                    dados->esteroidesAtivo =0;
-                    dados->defesa = 0.0f;
-                    dados->tempoesteroides = 0;
-                    dados->vida = round(dados->vida);
-                }
-            }
+        }
+    }
+    if(dados->esteroidesAtivo ==3)
+    {
+        if(++dados->tempoesteroides == (poder->tempo/2))
+        {
+            texugo->idxQuadroTexugo = texugo->idxQuadroTexugoMinOriginal;
+            texugo->idxQuadroTexugoMin = texugo->idxQuadroTexugoMinOriginal;
+            texugo->idxQuadroTexugoMax = texugo->idxQuadroTexugoMaxOriginal;
+            dados->esteroidesAtivo =0;
+            dados->defesa = 0.0f;
+            dados->tempoesteroides = 0;
+            dados->vida = round(dados->vida);
+        }
+    }
 }
 
-void ativaTiara(poderes_t *poder, memoria_t *dados, personagem_t *texugo){
+void ativaTiara(poderes_t *poder, memoria_t *dados, personagem_t *texugo)
+{
 
-if(dados->tiara)
-                {
-                    if(dados->bloqueioBotao == 0 )
-                    {
-                        dados->tiara--;
-                        dados->bloqueioBotao = 1;
-                        dados->tiaraAtivo = 1;
-                        texugo->idxQuadroTexugo     =  poder->idxQuadroTexugoMin;
-                        texugo->idxQuadroTexugoMin  =  poder->idxQuadroTexugoMin;
-                        texugo->idxQuadroTexugoMax  =  poder->idxQuadroTexugoMax;
-                    }
-                }
-                else
-                {
-                    printf("Sem tiara");
-                }
+    if(dados->tiara)
+    {
+        if(dados->bloqueioBotao == 0 )
+        {
+            dados->tiara--;
+            dados->bloqueioBotao = 1;
+            dados->tiaraAtivo = 1;
+            texugo->idxQuadroTexugo     =  poder->idxQuadroTexugoMin;
+            texugo->idxQuadroTexugoMin  =  poder->idxQuadroTexugoMin;
+            texugo->idxQuadroTexugoMax  =  poder->idxQuadroTexugoMax;
+        }
+    }
+    else
+    {
+        printf("Sem tiara");
+    }
 }
 
-void inativaTiara(poderes_t *poder, memoria_t *dados, personagem_t *texugo){
+void inativaTiara(poderes_t *poder, memoria_t *dados, personagem_t *texugo)
+{
 
-                if(++dados->tempotiara == poder->tempo)
-                {
-                    texugo->idxQuadroTexugo = texugo->idxQuadroTexugoMinOriginal;
-                    texugo->idxQuadroTexugoMin = texugo->idxQuadroTexugoMinOriginal;
-                    texugo->idxQuadroTexugoMax = texugo->idxQuadroTexugoMaxOriginal;
-                    dados->tempotiara = 0;
-                    dados->tiaraAtivo  = 0;
+    if(++dados->tempotiara == poder->tempo)
+    {
+        texugo->idxQuadroTexugo = texugo->idxQuadroTexugoMinOriginal;
+        texugo->idxQuadroTexugoMin = texugo->idxQuadroTexugoMinOriginal;
+        texugo->idxQuadroTexugoMax = texugo->idxQuadroTexugoMaxOriginal;
+        dados->tempotiara = 0;
+        dados->tiaraAtivo  = 0;
 
-                }
+    }
 }
 
 void musica(memoria_t *dados,sfMusic *music)
@@ -433,14 +445,15 @@ void carregaPersonagem(sfSprite  *desenho)
     /*escala do desenho*/
 }
 
-void carregaCenario(sfSprite  *cenario, memoria_t *dados){
-        sfTexture *cenario2;
-        if(dados->fase == 1)  cenario2 = sfTexture_createFromFile("imagens/cenario/cenarion2.png", NULL);
-        if(dados->fase == 2)  cenario2 = sfTexture_createFromFile("imagens/cenario/cenarion1.png", NULL);
-        if(dados->fase == 0)  cenario2 = sfTexture_createFromFile("imagens/cenario/menu.png", NULL);
-        if(dados->fase == 98) cenario2 = sfTexture_createFromFile("imagens/cenario/fim.png", NULL);
-        if(dados->fase == 99) cenario2 = sfTexture_createFromFile("imagens/cenario/gameover.png", NULL);
-        sfSprite_setTexture(cenario, cenario2, 0);
+void carregaCenario(sfSprite  *cenario, memoria_t *dados)
+{
+    sfTexture *cenario2;
+    if(dados->fase == 1)  cenario2 = sfTexture_createFromFile("imagens/cenario/cenarion2.png", NULL);
+    if(dados->fase == 2)  cenario2 = sfTexture_createFromFile("imagens/cenario/cenarion1.png", NULL);
+    if(dados->fase == 0)  cenario2 = sfTexture_createFromFile("imagens/cenario/menu.png", NULL);
+    if(dados->fase == 98) cenario2 = sfTexture_createFromFile("imagens/cenario/fim.png", NULL);
+    if(dados->fase == 99) cenario2 = sfTexture_createFromFile("imagens/cenario/gameover.png", NULL);
+    sfSprite_setTexture(cenario, cenario2, 0);
 }
 
 void carregaDadosCompartilhados(memoria_t *dados)
@@ -482,7 +495,8 @@ void carregaDadosCompartilhados(memoria_t *dados)
     dados->jogando =1;
 }
 
-void carregaTexugo(personagem_t *texugo){
+void carregaTexugo(personagem_t *texugo)
+{
     texugo->posX  = 0;
     texugo->posY  = 0;
     texugo->tamX  = 25;
@@ -611,7 +625,8 @@ int main()
             detector[i]->tamX  = 30;
             detector[i]->tamY  = 30;
             detector[i]->some = 0;
-            if(dados->fase == 2){
+            if(dados->fase == 2)
+            {
                 detector[i]->some = 1;
             }
             detector[i]->tempo = 7000;
@@ -632,7 +647,8 @@ int main()
             chocolate[i]->tamX  = 30;
             chocolate[i]->tamY  = 30;
             chocolate[i]->some = 0;
-            if(dados->fase == 2){
+            if(dados->fase == 2)
+            {
                 chocolate[i]->some = 1;
             }
             chocolate[i]->pontuacao = 75;  //375 = 325
@@ -652,7 +668,8 @@ int main()
             tiara[i]->tamX  = 30;
             tiara[i]->tamY  = 30;
             tiara[i]->some = 0;
-            if(dados->fase == 2){
+            if(dados->fase == 2)
+            {
                 tiara[i]->some = 1;
             }
             tiara[i]->pontuacao = 163;
@@ -684,7 +701,8 @@ int main()
             esteroides[i]->tamX  = 30;
             esteroides[i]->tamY  = 30;
             esteroides[i]->some = 0;
-            if(dados->fase == 2){
+            if(dados->fase == 2)
+            {
                 esteroides[i]->some = 1;
             }
             esteroides[i]->pontuacao = 162;
@@ -726,14 +744,15 @@ int main()
             //para exibir telas de menu, game over e fim
             while(dados->fase != 1 & dados->fase != 2)
             {
-                    sfRenderWindow_clear( janela, sfBlack);
-                    sfRenderWindow_drawSprite( janela, cenario,NULL);
-                    sfRenderWindow_display ( janela );
-                    if(sfKeyboard_isKeyPressed( sfKeyEnter )){
-                        carregaDadosCompartilhados(dados);
-                        dados->fase =1;
-                        dados->jogando =0;
-                    }
+                sfRenderWindow_clear( janela, sfBlack);
+                sfRenderWindow_drawSprite( janela, cenario,NULL);
+                sfRenderWindow_display ( janela );
+                if(sfKeyboard_isKeyPressed( sfKeyEnter ))
+                {
+                    carregaDadosCompartilhados(dados);
+                    dados->fase =1;
+                    dados->jogando =0;
+                }
             }
 
             // relogio para atualizar o desenho
@@ -743,7 +762,8 @@ int main()
                 dados->dano = 0;
                 dados->bloqueioBotao = 0;
                 dados->posicao++;
-                if(dados->posicao >= 2 ) {
+                if(dados->posicao >= 2 )
+                {
                     dados->posicao =0;
                 }
                 sfClock_restart( relogio );
@@ -754,7 +774,8 @@ int main()
             {
 
                 dados->posicao++;
-                if(dados->posicao >= 2 ) {
+                if(dados->posicao >= 2 )
+                {
                     dados->posicao =0;
 
                 }
@@ -773,7 +794,7 @@ int main()
 
             if(sfKeyboard_isKeyPressed( sfKeyC ) & dados->chocolateAtivo == 0)
             {
-               ativaChocolate(chocolate[0], dados, texugo);
+                ativaChocolate(chocolate[0], dados, texugo);
             }
 
             if(dados->chocolateAtivo ==1)
@@ -786,7 +807,8 @@ int main()
                 ativaEsteroides(esteroides[0], dados, texugo);
             }
 
-            if(dados->esteroidesAtivo != 0){
+            if(dados->esteroidesAtivo != 0)
+            {
                 inativaEsteroides(esteroides[0], dados, texugo);
             }
             if(sfKeyboard_isKeyPressed( sfKeyT ) & dados->tiaraAtivo == 0)
@@ -806,7 +828,10 @@ int main()
             char informacao[200];
             sprintf(informacao, "Vidas %d Chocolate %d Tiara %d Detector Rifeiros %d   Esteroides %d  Conhecimento %d  :::: Pontuacao %d ", (int)round(dados->vida), dados->chocolate, dados->tiara, dados->detector, dados->esteroides, dados->conhecimento, dados->pontuacao);
             sfText_setString(text, informacao);
-            sfText_setPosition(text,(sfVector2f){0.0f, 785.0f});
+            sfText_setPosition(text,(sfVector2f)
+            {
+                0.0f, 785.0f
+            });
             sfRenderWindow_drawText(janela, text, NULL);
             /*inserção do poder na fase*/
             for(int i=0; i<dados->quantidadechocolate; i++)
@@ -876,7 +901,8 @@ int main()
 
             if(dados->fase == 2)
             {
-                if(dados->conhecimento >= 5 && (texugo->idxQuadroTexugo == 0 || texugo->idxQuadroTexugo == 1)){
+                if(dados->conhecimento >= 5 && (texugo->idxQuadroTexugo == 0 || texugo->idxQuadroTexugo == 1))
+                {
                     texugo->idxQuadroTexugo    = 24;
                     texugo->idxQuadroTexugoMin = 24;
                     texugo->idxQuadroTexugoMax = 25;
@@ -924,12 +950,13 @@ int main()
 
             for(int i=0; i<(dados->quantidaderifeiro+dados->maisrifeiro); i++)
             {
-                    caminhaRifeiro(rifeiro[i], texugo, dados, desenho, janela, detector[0]);
+                caminhaRifeiro(rifeiro[i], texugo, dados, desenho, janela, detector[0]);
             }
 
             sfRenderWindow_display ( janela );
 
-            if(dados->vida <= 0){
+            if(dados->vida <= 0)
+            {
                 dados->fase = 99;
                 dados->jogando = 0;
                 texugo->vel = 0.09f;
